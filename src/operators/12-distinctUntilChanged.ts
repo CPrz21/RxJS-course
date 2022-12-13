@@ -1,5 +1,5 @@
 import { from, of } from "rxjs";
-import { distinctUntilChanged, distinctUntilKeyChanged } from "rxjs/operators";
+import { distinctUntilChanged } from "rxjs/operators";
 
 const numbers$ = of(1, "1", 1, 3, 3, 2, 2, 4, 4, 5, 3, "1");
 
@@ -34,4 +34,6 @@ const characters: Character[] = [
   },
 ];
 
-from(characters).pipe(distinctUntilKeyChanged("name")).subscribe(console.log);
+from(characters)
+  .pipe(distinctUntilChanged((prev, curr) => prev.name === curr.name))
+  .subscribe(console.log);
